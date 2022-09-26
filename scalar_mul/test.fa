@@ -1,0 +1,28 @@
+import c_init(int, name) as init;
+import c_print(value) as print;
+import c_sum(name, value, value) as sum;
+
+sub scalar_mul(name x, name y, int len) {
+    df res;
+
+    for i = 1..len {
+        sum(res[i], x[i], y[i]);
+        print(res[i]);
+    }
+}
+
+sub main() {
+	df x, y;
+
+    init(1, x[1]);
+    init(2, x[2]);
+    init(3, x[3]);
+
+    init(1, y[1]);
+    init(2, y[2]);
+    init(3, y[3]);
+
+
+    scalar_mul(x, y, 3);
+}
+

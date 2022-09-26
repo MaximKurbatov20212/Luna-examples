@@ -1,0 +1,53 @@
+import c_init(int, name) as init;
+import c_print(value) as print;
+import c_iprint(int) as iprint;
+import c_sub(name, value, value) as sub_value;
+import c_sum(name, value, value) as sum;
+
+sub lines_sub(name matrix, 
+                int line_1, 
+                int line_2, 
+                int len) {
+
+    for i = 0..(len - 1) {
+        sub_value(matrix[line_1][i], matrix[line_1][i], matrix[line_2][i]);
+    }
+}
+
+sub lines_sum(name matrix, 
+                int line_1, 
+                int line_2, 
+                int len) {
+
+    for i = 0..(len - 1) {
+        sub_value(matrix[line_1][i], matrix[line_1][i], matrix[line_2][i]);
+    }
+}
+
+
+// matrix N x (N + 1)
+// 1 0 5
+// 0 1 6
+// x1 = 5; x2 = 6
+sub gauss_method(name matrix, int N) {
+    for i = 0..(N-1) {
+        for j = 0..N {
+            print(matrix[i][j]);
+        }
+    }
+}
+
+sub main() {
+	df matrix;
+
+    init(1, matrix[0][0]);
+    init(2, matrix[0][1]);
+    init(0, matrix[1][0]);
+    init(0, matrix[1][1]);
+
+    init(6, matrix[0][2]);
+    init(3, matrix[1][2]);
+
+    gauss_method(matrix, 2);
+}
+
