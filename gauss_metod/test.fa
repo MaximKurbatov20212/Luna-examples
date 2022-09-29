@@ -1,53 +1,51 @@
 import c_init(int, name) as init;
 import c_print(value) as print;
 import c_iprint(int) as iprint;
-import c_sub(name, value, value) as sub_value;
-import c_sum(name, value, value) as sum;
+import c_set_k(name, value, value) as set_k;
+import c_calculate(name, value, value, value) as calculate;
 
-sub lines_sub(name matrix, 
-                int line_1, 
-                int line_2, 
-                int len) {
+sub gauss_method(name src_matrix, name dst_matrix, int N) {
+    df K; // коэффициент, чтобы занулить
 
-    for i = 0..(len - 1) {
-        sub_value(matrix[line_1][i], matrix[line_1][i], matrix[line_2][i]);
-    }
-}
+    for j = 0..(N - 2) {
+        for i = (j+1)..(N - 1) {
+            set_k(K[j][i], src_matrix[i][j], src_matrix[j][j]);
 
-sub lines_sum(name matrix, 
-                int line_1, 
-                int line_2, 
-                int len) {
+            for k = 0..(N - 1) {
 
-    for i = 0..(len - 1) {
-        sub_value(matrix[line_1][i], matrix[line_1][i], matrix[line_2][i]);
-    }
-}
+//                print(K[k][i]);
+//                print(src_matrix[i][j]);
+//                print(src_matrix[k][j]);
 
+                calculate(dst_matrix[i][k],
+                          src_matrix[i][k], 
+                          src_matrix[k][k],
+                          K[j][i]);
+//                print(dst_matrix[i][j]);
 
-// matrix N x (N + 1)
-// 1 0 5
-// 0 1 6
-// x1 = 5; x2 = 6
-sub gauss_method(name matrix, int N) {
-    for i = 0..(N-1) {
-        for j = 0..N {
-            print(matrix[i][j]);
+            }
         }
     }
+
+//    for i = 0..1 {
+//        for j = 0..1 {
+//            print(dst_matrix[i][j]);
+//        }
+//    }
 }
 
 sub main() {
-	df matrix;
+	df matrix, dst;
 
     init(1, matrix[0][0]);
-    init(2, matrix[0][1]);
-    init(0, matrix[1][0]);
-    init(0, matrix[1][1]);
+    init(1, matrix[0][1]);
+    init(1, matrix[1][0]);
+    init(1, matrix[1][1]);
 
-    init(6, matrix[0][2]);
-    init(3, matrix[1][2]);
+    init(1, dst[0][0]);
+    init(1, dst[0][1]);
+    init(1, dst[1][0]);
+    init(1, dst[1][1]);
 
-    gauss_method(matrix, 2);
+    gauss_method(matrix, dst, 2);
 }
-
