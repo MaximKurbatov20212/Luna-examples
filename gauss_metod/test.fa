@@ -1,51 +1,47 @@
-import c_init(int, name) as init;
+import c_init(real, name) as init;
 import c_print(value) as print;
-import c_iprint(int) as iprint;
+//import c_iprint(real) as iprint;
 import c_set_k(name, value, value) as set_k;
 import c_calculate(name, value, value, value) as calculate;
+import c_set(name, value) as set;
 
-sub gauss_method(name src_matrix, name dst_matrix, int N) {
-    df K; // коэффициент, чтобы занулить
+sub gauss_method(name src_matrix, int N) {
+    // K - коэффициент, чтобы занулить
+    df K, R; 
+    
+    // копируем ФД, которые не изменяются(верняя строчка)
+    for i = 0..(N-1) {
+        set(R[0][i], src_matrix[0][i]);
+    }
 
-    for j = 0..(N - 2) {
+    for j = 0..(N - 1) {
         for i = (j+1)..(N - 1) {
+            
             set_k(K[j][i], src_matrix[i][j], src_matrix[j][j]);
 
             for k = 0..(N - 1) {
-
-//                print(K[k][i]);
-//                print(src_matrix[i][j]);
-//                print(src_matrix[k][j]);
-
-                calculate(dst_matrix[i][k],
-                          src_matrix[i][k], 
-                          src_matrix[k][k],
-                          K[j][i]);
-//                print(dst_matrix[i][j]);
-
+                calculate(R[i][k],
+                        src_matrix[i][k], 
+                        src_matrix[j][k],
+                        K[j][i]);
             }
         }
     }
 
-//    for i = 0..1 {
-//        for j = 0..1 {
-//            print(dst_matrix[i][j]);
-//        }
-//    }
+    for i = 0..(N-1) {
+        for j = 0..(N-1) {
+            print(R[i][j]);
+        }
+    }
 }
 
 sub main() {
-	df matrix, dst;
+    df matrix, dst;
 
-    init(1, matrix[0][0]);
-    init(1, matrix[0][1]);
-    init(1, matrix[1][0]);
-    init(1, matrix[1][1]);
+    init(1.0, matrix[0][0]);
+    init(2.0, matrix[0][1]);
+    init(3.0, matrix[1][0]);
+    init(4.0, matrix[1][1]);
 
-    init(1, dst[0][0]);
-    init(1, dst[0][1]);
-    init(1, dst[1][0]);
-    init(1, dst[1][1]);
-
-    gauss_method(matrix, dst, 2);
+    gauss_method(matrix, 2);
 }
