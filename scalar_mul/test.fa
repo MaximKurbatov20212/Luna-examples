@@ -58,14 +58,16 @@ sub main() {
     init(3, x[2]);
     init(4, x[3]);
     init(5, x[4]);
+    init(6, x[5]);
 
     init(1, y[0]);
-    init(2, y[1]);
-    init(3, y[2]);
-    init(4, y[3]);
-    init(5, y[4]);
+    init(1, y[1]);
+    init(1, y[2]);
+    init(1, y[3]);
+    init(1, y[4]);
+    init(1, y[5]);
 
-    scalar_mul(x, y, 5);
+    scalar_mul(x, y, 6);
 }
 
 

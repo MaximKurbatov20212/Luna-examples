@@ -1,0 +1,13 @@
+luna: fatal error: recom-generation failed (see below):
+Traceback (most recent call last):
+  File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp", line 1674, in <module>
+    content=Fa(ja).gen()
+  File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp", line 1641, in __init__
+    self.Subs[sub_name]=create_sub(self, sub_name)
+  File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp", line 1630, in create_sub
+    return SubStruct(fa, sub_name, None)
+  File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp", line 1581, in __init__
+    parse_bi(self.Items, bi, self.Regs, self)
+  File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp", line 803, in parse_bi
+    sub=ja[bi['code']]
+KeyError: 'init'

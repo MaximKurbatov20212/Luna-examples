@@ -1,7 +1,7 @@
 import c_init(real, name) as init;
 import c_init_df(value, name) as df_init;
 import c_print(value) as print;
-//import c_iprint(real) as iprint;
+import c_iprint(int) as iprint;
 import c_set_k(name, value, value) as set_k;
 import c_calculate(name, value, value, value) as calculate;
 import c_set(name, value) as set;
@@ -20,15 +20,22 @@ sub print_res(name src_matrix, int N) {
     }
 }
 
+sub calc_K(name K, name src_matrix, int i, int j, int N) {
+    set_k(K[i][j], src_matrix[i][j], src_matrix[j][j]);
+}
+
 sub gauss_method(name src_matrix, int N) {
     df K, copy; 
 
     for j = 0..(N - 1) {
         for i = (j + 1)..(N - 1) {
+//            calc_K(K, src_matrix, i, j, N);
 
-            set_k(K[i][j], src_matrix[i][j], src_matrix[j][j]);
+            set_k(K[i][j], 
+                src_matrix[i][j], 
+                src_matrix[j][j]);
 
-            for k = j..(N - 1) {
+            for k = 0..(N - 1) {
 
                 // сохраним копию src_matrix[i][k] и удалим src_matrix[i][k] 
                 // чтобы мы могли что-то присвоит этому ФД в дальнешем
@@ -40,10 +47,11 @@ sub gauss_method(name src_matrix, int N) {
                         src_matrix[j][k],
                         K[i][j]) @ {delete copy;};
 
-                i_j_print(i, k, src_matrix[i][k]);
+//                i_j_print(i, k, src_matrix[i][k]);
             } 
         }
     }
+    print_res(src_matrix, N);
 }
 
 sub main() {

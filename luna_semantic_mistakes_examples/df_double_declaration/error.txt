@@ -1,0 +1,4 @@
+luna: compile error: syntax error at ./test.fa:3
+    df y;
+      ^--here
+

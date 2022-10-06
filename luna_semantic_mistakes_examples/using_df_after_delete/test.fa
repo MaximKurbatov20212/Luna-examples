@@ -1,0 +1,11 @@
+import c_init(int, name) as init;
+import c_print(value) as print;
+import c_sum(name, value, value) as sum;
+
+sub main() {
+	df x, y;
+
+    init(1, x[1]) @ {delete x[1];};
+
+    print(x[1]);
+}

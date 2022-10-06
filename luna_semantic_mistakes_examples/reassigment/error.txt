@@ -1,0 +1,23 @@
+luna: fatal error: run-time error: errcode=1
+err> 0 ERROR:  Duplicate id in post: ID<0, 0> ./src/rts/rts.cpp:593
+err> 0 ABORT 
+err> terminate called after throwing an instance of 'RuntimeError'
+err>   what():  std::exception
+err> 
+err> rts:6894 terminated with signal 6 at PC=7f5c18672a7c SP=7f5c13175870.  Backtrace:
+err> /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x12c)[0x7f5c18672a7c]
+err> /lib/x86_64-linux-gnu/libc.so.6(raise+0x16)[0x7f5c1861e476]
+err> /lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7f5c186047f3]
+err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xa2bbe)[0x7f5c188c6bbe]
+err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xae24c)[0x7f5c188d224c]
+err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xae2b7)[0x7f5c188d22b7]
+err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xae518)[0x7f5c188d2518]
+err> /home/kermit/Desktop/luna/scripts/../lib/librts.so(+0xe58c)[0x7f5c1b07158c]
+err> /home/kermit/Desktop/luna/scripts/../build/programs/home/kermit/Desktop/luna_examples/luna_semantic_mistakes_examples/reassigment/test.fa/libucodes.so(_Z7block_3R2CF+0xf6)[0x7f5c180ccc36]
+err> /home/kermit/Desktop/luna/scripts/../lib/librts.so(+0x27ff3)[0x7f5c1b08aff3]
+err> /home/kermit/Desktop/luna/scripts/../lib/librts.so(_ZN10ThreadPool7routineEv+0x124)[0x7f5c1b092944]
+err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xdc2b3)[0x7f5c189002b3]
+err> /lib/x86_64-linux-gnu/libc.so.6(+0x94b43)[0x7f5c18670b43]
+err> /lib/x86_64-linux-gnu/libc.so.6(+0x126a00)[0x7f5c18702a00]
+err> 
+

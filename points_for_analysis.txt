@@ -1,0 +1,79 @@
+semantic mistakes:
+
+1. df double declaration
+    example:
+        df a;
+        df b; // error : df double decralation
+
+    example:
+        df a, a; // error
+
+// проверить
+2. parametes mismatching between function declaration and function call.
+    example:
+        sub foo(int a) {}
+        
+        df bar;
+        bar = 1.0;
+        foo(bar);
+
+3. import many .c functions with same alias.
+    example:
+        import c_foo() as foo;
+        import c_bar() as foo; // shadowing 
+
+
+4. invalid df assignment + using uninitialized df
+    example:
+        df a, b;
+        a = b; // init(a, b); instead
+
+    example:
+        df a;
+        a = 1;
+
+5. reassigment:
+    example:
+        int a = 1;
+        a = 2;
+
+    example: // very difficult, I think
+        df a;
+        a[1][1] = 1;
+        a[1][1] = 2;
+    
+    example: don't do it now  
+    sub func(df a) {
+        a[1][1] = 1;
+    }
+
+    sub main() {
+        df a;
+        a[1][1] = 1;
+        func(a);
+    }
+
+6. there is no matching function:
+    example:
+        import ... init; // no such import
+        sub main() {
+            df a;
+            init(a, 1); // error, init() is not defined.
+        }
+
+7. using df after delete 
+    df a;
+    delete a;
+    a = ...; // error
+
+
+
+lexical mistakes:
+
+1. have no ;
+    exaple:
+        int a
+
+2. have no matching bracket
+    for i=0..1 { 
+

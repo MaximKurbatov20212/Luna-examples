@@ -38,7 +38,7 @@ void c_iprint(int val) {
 }
 
 void c_print(const InputDF &df) {
-	printf("%f \n", df.getValue<double>());
+	printf("%f \n", df.getValue<int>());
 }
 
 void c_println() {

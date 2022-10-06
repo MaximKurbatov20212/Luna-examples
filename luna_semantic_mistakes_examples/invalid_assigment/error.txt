@@ -1,0 +1,8 @@
+luna: compile error: syntax error at ./test.fa:5
+    x = 1;
+       ^--here
+
+luna: compile error: syntax error at ./test.fa:7
+    y = z;
+       ^--here
+
