@@ -1,25 +1,27 @@
-luna: fatal error: run-time error: errcode=1
-err> 0 ERROR:  Ctrl-C detected ./src/rts/main.cpp:27
-err> 0 ABORT 
-err> terminate called after throwing an instance of 'RuntimeError'
-err>   what():  std::exception
-err> 
-err> rts:6093 terminated with signal 6 at PC=7fc148f7aa7c SP=7fff65b57240.  Backtrace:
-err> /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x12c)[0x7fc148f7aa7c]
-err> /lib/x86_64-linux-gnu/libc.so.6(raise+0x16)[0x7fc148f26476]
-err> /lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7fc148f0c7f3]
-err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xa2bbe)[0x7fc1491cebbe]
-err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xae24c)[0x7fc1491da24c]
-err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xae2b7)[0x7fc1491da2b7]
-err> /lib/x86_64-linux-gnu/libstdc++.so.6(+0xae518)[0x7fc1491da518]
-err> /home/kermit/Desktop/luna/scripts/../bin/rts(+0x2516)[0x56084f9bf516]
-err> /lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7fc148f26520]
-err> /lib/x86_64-linux-gnu/libc.so.6(+0x91195)[0x7fc148f75195]
-err> /lib/x86_64-linux-gnu/libc.so.6(pthread_cond_wait+0x211)[0x7fc148f77ac1]
-err> /home/kermit/Desktop/luna/scripts/../lib/librts.so(_ZN3RTS3runEv+0x9b)[0x7fc14b992d6b]
-err> /home/kermit/Desktop/luna/scripts/../bin/rts(main+0x23d)[0x56084f9bf96d]
-err> /lib/x86_64-linux-gnu/libc.so.6(+0x29d90)[0x7fc148f0dd90]
-err> /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80)[0x7fc148f0de40]
-err> /home/kermit/Desktop/luna/scripts/../bin/rts(+0x2b35)[0x56084f9bfb35]
+luna: fatal error: cpp-generation failed (see below):
+err> Traceback (most recent call last):
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 1214, in <module>
+err>     bid, cpp=gen_struct(sub)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 1148, in gen_struct
+err>     cpp_bodyfork, cpp_bodyitems=gen_body(scope, ja)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 1114, in gen_body
+err>     bibid, cpp=gen_bi(bi, scope)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 1093, in gen_bi
+err>     return gen_bi_exec(ja, parent_scope)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 948, in gen_bi_exec
+err>     cpp+=gen_exec_extern(scope, ja)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 599, in gen_exec_extern
+err>     value(arg, scope, param)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 442, in value
+err>     return value_value(x, scope)
+err>   File "/home/kermit/Desktop/luna/scripts/../scripts/fcmp2", line 432, in value_value
+err>     R(x)
+err>   File "/home/kermit/Desktop/luna/scripts/repr_ja.py", line 6, in R
+err>     raise Exception(', '.join([json.dumps(obj, indent=4) for obj in objs]))
+err> Exception: {
+err>     "is_expr": true,
+err>     "type": "rconst",
+err>     "value": 1.0
+err> }
 err> 
 

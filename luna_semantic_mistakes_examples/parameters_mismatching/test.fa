@@ -1,12 +1,8 @@
-import c_init(int, name) as init;
-import c_init_real(real, name) as init_real;
-import c_iprint(int) as print;
+import c_init(value, name) as init;
 
 sub main() {
     df x, y;
-
-    init_real(1.0, x);
-    print(x); // OK
+    init(1.0, x);
 }
 
 
