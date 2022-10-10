@@ -12,62 +12,77 @@ sub pr_ln() {
     println();
 }
 
-sub print_res(name src_matrix, int N) {
+sub print_res(name src_matrix, int N, int gen) {
     for i = 0..(N - 1) {
         for j = 0..(N - 1) {
-            i_j_print(i, j, src_matrix[i][j]);
+            i_j_print(i, j, src_matrix[gen][i][j]);
         }
     }
 }
 
-sub calc_K(name K, name src_matrix, int i, int j, int N) {
-    set_k(K[i][j], src_matrix[i][j], src_matrix[j][j]);
+// копируем все строчки, кроме той, которая будет изменена в данным поколении
+sub copy(name src_matrix, int N, int cur_line, int generation, int flag) {
+    if (flag == 0) {
+        iprint(10000);
+        for i = 0..(cur_line - 1) {
+            for j = 0..(N - 1) {
+                df_init(src_matrix[generation - 1][i][j], src_matrix[generation][i][j]);
+            }
+        }
+
+        for i = (cur_line + 1)..(N - 1) {
+            for j = 0..(N - 1) {
+                df_init(src_matrix[generation - 1][i][j], src_matrix[generation][i][j]);
+            }
+        }
+    }
 }
 
+// скопировать n верхних строк 
+// изменить i-ую строчку 
+// скопировать все остальные строчки
 sub gauss_method(name src_matrix, int N) {
-    df K, copy; 
-
     for j = 0..(N - 1) {
         for i = (j + 1)..(N - 1) {
-//            calc_K(K, src_matrix, i, j, N);
-
+            df K; 
+            // коэффициент, чтобы занулить
             set_k(K[i][j], 
-                src_matrix[i][j], 
-                src_matrix[j][j]);
+                src_matrix[j + i - 1][i][j], 
+                src_matrix[j + i - 1][j][j]);
 
+            // изменяем строчку
             for k = 0..(N - 1) {
 
-                // сохраним копию src_matrix[i][k] и удалим src_matrix[i][k] 
-                // чтобы мы могли что-то присвоит этому ФД в дальнешем
-                df_init(src_matrix[i][k], copy) @ {delete src_matrix[i][k];};
+                // скопируем все строчки, кроме той, которую должны изменить
+                copy(src_matrix, N, i, i + j, k);
 
-                // a[i][k] -> a[i][k] - K[i][j] * a[j][k]
-                calculate(src_matrix[i][k],
-                        copy, 
-                        src_matrix[j][k],
-                        K[i][j]) @ {delete copy;};
+                // a[j+1][i][k] -> a[j][i][k] - K[i][j] * a[j][j][k]
+                calculate(src_matrix[j + i][i][k],
+                        src_matrix[j + i][i][k], 
+                        src_matrix[j + i][j][k],
+                        K[i][j]);
 
-//                i_j_print(i, k, src_matrix[i][k]);
+//                i_j_print(i, k, src_matrix[j + 1][i][k]);
+                print_res(src_matrix, N,  i + j);
             } 
         }
     }
-    print_res(src_matrix, N);
 }
 
 sub main() {
     df matrix;
 
-    init(1.0, matrix[0][0]);
-    init(2.0, matrix[0][1]);
-    init(3.0, matrix[0][2]);
+    init(1.0, matrix[0][0][0]);
+    init(2.0, matrix[0][0][1]);
+    init(3.0, matrix[0][0][2]);
 
-    init(4.0, matrix[1][0]);
-    init(5.0, matrix[1][1]);
-    init(6.0, matrix[1][2]);
+    init(4.0, matrix[0][1][0]);
+    init(5.0, matrix[0][1][1]);
+    init(6.0, matrix[0][1][2]);
 
-    init(7.0, matrix[2][0]);
-    init(8.0, matrix[2][1]);
-    init(9.0, matrix[2][2]);
+    init(7.0, matrix[0][2][0]);
+    init(8.0, matrix[0][2][1]);
+    init(9.0, matrix[0][2][2]);
 
     gauss_method(matrix, 3);
 }
