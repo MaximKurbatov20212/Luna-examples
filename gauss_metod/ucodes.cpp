@@ -1,5 +1,6 @@
 #include "ucenv.h"
 #include <cstdio>
+#include <cstring>
 
 extern "C" {
 
@@ -12,8 +13,8 @@ void c_init_df(InputDF val, OutputDF &df) {
 }
 
 void c_set_k(OutputDF& K, InputDF in_a, InputDF in_b) {
-
     K.setValue(static_cast<double>(in_a.getValue<double>() / in_b.getValue<double>()));
+
 
 //    printf("%f / %f = %f\n", in_a.getValue<double>(),
 //            in_b.getValue<double>(),
@@ -35,6 +36,11 @@ void c_calculate(OutputDF& K,
 
 void c_iprint(int val) {
 	printf("%d \n", val);
+}
+
+
+void c_print_str(const char* string) {
+	printf("%s\n", string);
 }
 
 void c_print(const InputDF &df) {

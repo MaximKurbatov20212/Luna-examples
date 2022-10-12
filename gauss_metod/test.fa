@@ -1,5 +1,6 @@
 import c_init(real, name) as init;
 import c_init_df(value, name) as df_init;
+import c_print_str(string) as print_str;
 import c_print(value) as print;
 import c_iprint(int) as iprint;
 import c_set_k(name, value, value) as set_k;
@@ -7,10 +8,6 @@ import c_calculate(name, value, value, value) as calculate;
 import c_set(name, value) as set;
 import c_i_j_print(int, int, value) as i_j_print;
 import c_println() as println;
-
-sub pr_ln() {
-    println();
-}
 
 sub print_res(name src_matrix, int N, int gen) {
     for i = 0..(N - 1) {
@@ -21,50 +18,71 @@ sub print_res(name src_matrix, int N, int gen) {
 }
 
 // копируем все строчки, кроме той, которая будет изменена в данным поколении
-sub copy(name src_matrix, int N, int cur_line, int generation, int flag) {
+// src_matrix - matrix
+// N - size
+// cur_line - line which we will modify in this generation
+// generation - current matrix generation
+// flag - it is a crutch to complier doesn't compute this function elier.  
+sub copy(name src_matrix, 
+        int N,
+        int cur_line, 
+        int generation, 
+        int flag) {
+
     if (flag == 0) {
-        iprint(10000);
+        print_str("copy");
         for i = 0..(cur_line - 1) {
             for j = 0..(N - 1) {
-                df_init(src_matrix[generation - 1][i][j], src_matrix[generation][i][j]);
+                df_init(src_matrix[generation - 1][i][j],
+                        src_matrix[generation][i][j]);
             }
         }
 
         for i = (cur_line + 1)..(N - 1) {
             for j = 0..(N - 1) {
-                df_init(src_matrix[generation - 1][i][j], src_matrix[generation][i][j]);
+                df_init(src_matrix[generation - 1][i][j],
+                        src_matrix[generation][i][j]);
             }
         }
     }
 }
 
-// скопировать n верхних строк 
-// изменить i-ую строчку 
-// скопировать все остальные строчки
+// flag - it is a crutch to complier doesn't compute this function elier.  
+sub setK(name K, name src_matrix, int i, int j, int flag) {
+    if (flag == 0) {
+        print_str("set K");
+        set_k(K[i][j], 
+            src_matrix[j + i - 1][i][j], 
+            src_matrix[j + i - 1][j][j]);
+    }
+}
+
+// i + j is cur generation
 sub gauss_method(name src_matrix, int N) {
+    df K; 
     for j = 0..(N - 1) {
         for i = (j + 1)..(N - 1) {
-            df K; 
-            // коэффициент, чтобы занулить
-            set_k(K[i][j], 
-                src_matrix[j + i - 1][i][j], 
-                src_matrix[j + i - 1][j][j]);
 
             // изменяем строчку
             for k = 0..(N - 1) {
 
+                // коэффициент, чтобы занулить 
+                setK(K, src_matrix, i, j, k);
+
                 // скопируем все строчки, кроме той, которую должны изменить
                 copy(src_matrix, N, i, i + j, k);
 
-                // a[j+1][i][k] -> a[j][i][k] - K[i][j] * a[j][j][k]
+                // a[cur_gen][i][k] -> a[prev_gen][i][k] - K[i][j] * a[prev_gen][j][k]
                 calculate(src_matrix[j + i][i][k],
-                        src_matrix[j + i][i][k], 
-                        src_matrix[j + i][j][k],
-                        K[i][j]);
-
-//                i_j_print(i, k, src_matrix[j + 1][i][k]);
-                print_res(src_matrix, N,  i + j);
+                        src_matrix[j + i - 1][i][k], 
+                        src_matrix[j + i - 1][j][k],
+                        K[i][j]) @ { delete src_matrix[j + i - 1][i][k];};
             } 
+        }
+         
+        // crutch to print matrix after calculations
+        if (j == (N - 1)) {
+            print_res(src_matrix, N,  (N * N / 2) - 1);
         }
     }
 }
@@ -72,50 +90,38 @@ sub gauss_method(name src_matrix, int N) {
 sub main() {
     df matrix;
 
+//    init(1.0, matrix[0][0][0]);
+//    init(2.0, matrix[0][0][1]);
+//    init(3.0, matrix[0][0][2]);
+//
+//    init(4.0, matrix[0][1][0]);
+//    init(5.0, matrix[0][1][1]);
+//    init(6.0, matrix[0][1][2]);
+//
+//    init(7.0, matrix[0][2][0]);
+//    init(8.0, matrix[0][2][1]);
+//    init(9.0, matrix[0][2][2]);
+
     init(1.0, matrix[0][0][0]);
     init(2.0, matrix[0][0][1]);
     init(3.0, matrix[0][0][2]);
+    init(4.0, matrix[0][0][3]);
 
-    init(4.0, matrix[0][1][0]);
-    init(5.0, matrix[0][1][1]);
-    init(6.0, matrix[0][1][2]);
+    init(5.0, matrix[0][1][0]);
+    init(6.0, matrix[0][1][1]);
+    init(7.0, matrix[0][1][2]);
+    init(8.0, matrix[0][1][3]);
 
-    init(7.0, matrix[0][2][0]);
-    init(8.0, matrix[0][2][1]);
-    init(9.0, matrix[0][2][2]);
+    init(9.0,  matrix[0][2][0]);
+    init(10.0, matrix[0][2][1]);
+    init(11.0, matrix[0][2][2]);
+    init(12.0, matrix[0][2][3]);
 
-    gauss_method(matrix, 3);
+    init(13.0, matrix[0][3][0]);
+    init(14.0, matrix[0][3][1]);
+    init(15.0, matrix[0][3][2]);
+    init(16.0, matrix[0][3][3]);
+
+    gauss_method(matrix, 4);
 }
 
-
-
-
-
-
-
-
-//        init(1.0, matrix[0][0]);
-//        init(2.0, matrix[0][1]);
-//        init(3.0, matrix[1][0]);
-//        init(4.0, matrix[1][1]);
-
-//    init(1.0, matrix[0][0]);
-//    init(2.0, matrix[0][1]);
-//    init(3.0, matrix[0][2]);
-//    init(4.0, matrix[0][3]);
-
-//    init(5.0, matrix[1][0]);
-//    init(6.0, matrix[1][1]);
-//    init(7.0, matrix[1][2]);
-//    init(8.0, matrix[1][3]);
-//
-//    init(9.0,  matrix[2][0]);
-//    init(10.0, matrix[2][1]);
-//    init(11.0, matrix[2][2]);
-//    init(12.0, matrix[2][3]);
-//
-//    init(13.0, matrix[3][0]);
-//    init(14.0, matrix[3][1]);
-//    init(15.0, matrix[3][2]);
-//    init(16.0, matrix[3][3]);
-//
