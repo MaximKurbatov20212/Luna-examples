@@ -3,9 +3,14 @@ import c_print(value) as print;
 import c_sum(name, value, value) as sum;
 
 sub main() {
-    df x, y;
+    df x;
+    init(1, x);
 
-//        init(1, x[1]) @ {delete x[1];};
+    print(x) @ {
+        locator_cyclic : 0; 
+        delete x; 
+        };
 
-    print(x);
+    print(x) @ { locator_cyclic : 1; };
+
 }
