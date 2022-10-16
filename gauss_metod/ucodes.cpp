@@ -12,23 +12,8 @@ void c_init_df(InputDF val, OutputDF &df) {
 	df.setValue(val.getValue<double>());
 }
 
-void c_set_k(OutputDF& K, InputDF in_a, InputDF in_b) {
-    printf("setK\n");
-    K.setValue(static_cast<double>(in_a.getValue<double>() / in_b.getValue<double>()));
-}
-
 void c_set(OutputDF& out, InputDF in) {
     out.setValue(in.getValue<double>());
-}
-
-void c_calculate(OutputDF& K, 
-                 InputDF in_a, 
-                 InputDF in_b,
-                 InputDF in_c) {
-    printf("calculate\n");
-
-    K.setValue(static_cast<double>(in_a.getValue<double>() - 
-                (in_b.getValue<double>() * in_c.getValue<double>())));
 }
 
 void c_iprint(int val) {
