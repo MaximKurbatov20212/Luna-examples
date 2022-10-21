@@ -1,74 +1,74 @@
 import c_init(real, name) as init;
 import c_init_df(value, name) as df_init;
-import c_print_str(string) as print_str;
 import c_print(value) as print;
-import c_iprint(int) as iprint;
-import c_set(name, value) as set;
-import c_i_j_print(int, int, value) as i_j_print;
-import c_println() as println;
+import c_i_j_print(int, int, int, value) as i_j_print;
+import c_i_j_k(int, int, int) as i_j_k;
 
 sub print_res(name A, int N, int gen) {
     for i = 0..(N - 1) {
         for j = 0..(N - 1) {
-            i_j_print(i, j, A[gen][i][j]);
+            i_j_print(i, j, gen, A[gen][i][j]);
         }
     }
 }
 
-// копируем все строчки, кроме той, которая будет изменена в данным поколении
-// A - matrix
-// N - size
-// cur_line - line which we will modify in this generation
-// generation - current matrix generation
-// flag - it is a crutch to complier doesn't compute this function elier.
-sub copy(name A, 
-        int N,
-        int cur_line, 
-        int generation) {
-
-    for i = 0..(cur_line - 1) {
+sub copy(name A, int N, int cur_gen) {
+    for i = 0..(cur_gen - 1) {
         for j = 0..(N - 1) {
-            df_init(A[generation - 1][i][j],
-                    A[generation][i][j]);
-        }
-    }
-
-    for i = (cur_line + 1)..(N - 1) {
-        for j = 0..(N - 1) {
-            df_init(A[generation - 1][i][j],
-                    A[generation][i][j]);
+            df_init(A[cur_gen - 1][i][j], A[cur_gen][i][j]);
         }
     }
 }
 
 sub gauss_method(name A, int N) {
-    df K; 
     for j = 0..(N - 1) {
-        for i = (j + 1)..(N - 1) {
-            //set_k
-            df_init(A[j + i - 1][i][j] / A[j + i - 1][j][j], K[i][j]);
+        copy(A, N, j + 1); 
 
-            // скопируем все строчки, кроме той, которую должны изменить
-            copy(A, N, i, i + j);
+        for i = (j + 1)..(N - 1) {
 
             // изменяем строчку
             for k = 0..(N - 1) {
+
                 // a[cur_gen][i][k] -> a[prev_gen][i][k] - K[i][j] * a[prev_gen][j][k]
-                df_init(A[j + i - 1][i][k] - K[i][j] * A[j + i - 1][j][k],
-                        A[j + i][i][k]);
+                df_init(A[j][i][k] - A[j][i][j] / A[j][j][j] * A[j][j][k] ,
+                        A[j + 1][i][k]);
             } 
         }
-         
-        // crutch to print matrix after calculations
-        if (j == (N - 1)) {
-            print_res(A, N,  (N * N / 2) - 1);
-        }
     }
+    print_res(A, N, N - 1);
 }
 
 sub main() {
     df matrix;
 
+    init(1.0, matrix[0][0][0]);
+    init(2.0, matrix[0][0][1]);
+    init(3.0, matrix[0][0][2]);
+    init(4.0, matrix[0][0][3]);
+
+    init(1.0, matrix[0][1][0]);
+    init(4.0, matrix[0][1][1]);
+    init(7.0, matrix[0][1][2]);
+    init(8.0, matrix[0][1][3]);
+
+    init(2.0, matrix[0][2][0]);
+    init(4.0, matrix[0][2][1]);
+    init(7.0, matrix[0][2][2]);
+    init(9.0, matrix[0][2][3]);
+
+    init(1.0, matrix[0][3][0]);
+    init(2.0, matrix[0][3][1]);
+    init(3.0, matrix[0][3][2]);
+    init(7.0, matrix[0][3][3]);
+
+    gauss_method(matrix, 4); // 2x2 - good, 3x3 - good, 4x4 - error
+}
+
+//    init(1.0, matrix[0][0][0]);
+//    init(2.0, matrix[0][0][1]);
+//    init(3.0, matrix[0][1][0]);
+//    init(4.0, matrix[0][1][1]);
+//
 //    init(1.0, matrix[0][0][0]);
 //    init(2.0, matrix[0][0][1]);
 //    init(3.0, matrix[0][0][2]);
@@ -80,29 +80,8 @@ sub main() {
 //    init(7.0, matrix[0][2][0]);
 //    init(8.0, matrix[0][2][1]);
 //    init(9.0, matrix[0][2][2]);
-    init(1.0, matrix[0][0][0]);
-    init(2.0, matrix[0][0][1]);
-    init(3.0, matrix[0][0][2]);
-    init(4.0, matrix[0][0][3]);
 
-    init(5.0, matrix[0][1][0]);
-    init(6.0, matrix[0][1][1]);
-    init(7.0, matrix[0][1][2]);
-    init(8.0, matrix[0][1][3]);
-
-    init(9.0,  matrix[0][2][0]);
-    init(10.0, matrix[0][2][1]);
-    init(11.0, matrix[0][2][2]);
-    init(12.0, matrix[0][2][3]);
-
-    init(13.0, matrix[0][3][0]);
-    init(14.0, matrix[0][3][1]);
-    init(15.0, matrix[0][3][2]);
-    init(16.0, matrix[0][3][3]);
-
-
-
-    gauss_method(matrix, 4); // 2x2 - good, 3x3 - good, 4x4 - error
-}
-
-
+//    init(1.0, matrix[0][0][0]);
+//    init(2.0, matrix[0][0][1]);
+//    init(3.0, matrix[0][1][0]);
+//    init(4.0, matrix[0][1][1]);
