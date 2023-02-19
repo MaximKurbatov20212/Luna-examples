@@ -1,17 +1,4 @@
 sub main() {
-	df x;
+    df x;
     init(1, x);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,19 +1,6 @@
 sub main() {
-	df x, y, z;
+    df x, y, z;
 
     x = 1;
     y = z;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
